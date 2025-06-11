@@ -14,7 +14,7 @@ import voluptuous as vol
 
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError, TemplateError
-from homeassistant.helpers import chat_session, intent, llm, template
+from homeassistant.helpers import chat_session, frame, intent, llm, template
 from homeassistant.util.hass_dict import HassKey
 from homeassistant.util.json import JsonObjectType
 
@@ -391,8 +391,9 @@ class ChatLog:
         user_llm_prompt: str | None = None,
     ) -> None:
         """Set the LLM system prompt."""
-        LOGGER.warning(
-            "ChatLog.async_update_llm_data is deprecated and will be removed in 2026.1. Use async_provide_llm_data instead"
+        frame.report_usage(
+            "ChatLog.async_update_llm_data",
+            breaks_in_ha_version="2026.1",
         )
         return await self.async_provide_llm_data(
             llm_context=user_input.as_llm_context(conversing_domain),
